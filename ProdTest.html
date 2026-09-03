@@ -45,29 +45,42 @@
   const twindow   = params.get("twindow")   || "";
   
 
-  // --- SMART LOGIN GATE ---
+  // --- SMART LOGIN GATE FOR POWER APPS (AZURE AD) ---
 
-  // 1. Detect Power Pages / Azure AD login (antiforgery cookie)
-  const hasPowerPagesSession = document.cookie.includes(".AspNetCore.Antiforgery");
+  // Azure AD cookies that indicate an active session
+  const azureCookies = [
+    "ESTSAUTH",
+    "ESTSAUTHPERSISTENT",
+    "AADSSO",
+    "x-ms-RefreshTokenCredential"
+  ];
 
-  // 2. Optional: basic debug flag via query string (?debugLogin=true)
+  const hasAzureSession = azureCookies.some(c => document.cookie.includes(c));
+
+  // Debug mode: ?debugLogin=true
   const url = new URL(window.location.href);
   const debugLogin = url.searchParams.get("debugLogin") === "true";
 
   if (debugLogin) {
-    console.log("[LoginGate] hasPowerPagesSession:", hasPowerPagesSession);
+    console.log("[LoginGate] Azure AD session:", hasAzureSession);
+    console.log("[LoginGate] Cookies:", document.cookie);
   }
 
-  // 3. If NOT logged in → force Power Pages sign-in BEFORE loading the app
-  if (!hasPowerPagesSession) {
+  // If NOT logged in → force Azure AD login BEFORE loading the app
+  if (!hasAzureSession) {
     const returnUrl = encodeURIComponent(window.location.href);
 
     if (debugLogin) {
-      console.log("[LoginGate] Redirecting to Power Pages sign-in...");
+      console.log("[LoginGate] Redirecting to Azure AD login...");
     }
 
+    // This is the correct Azure AD login endpoint for Power Apps
     window.location.replace(
-      "https://moorparkcollege.powerappsportals.com/signin?returnUrl=" + returnUrl
+      "https://login.microsoftonline.com/common/oauth2/v2.0/authorize" +
+      "?client_id=00000003-0000-0000-c000-000000000000" + // Power Apps client
+      "&response_type=code" +
+      "&redirect_uri=" + returnUrl +
+      "&scope=openid profile email"
     );
   }
 
