@@ -79,4 +79,52 @@
 <body>
     <div class="container">
         <h1>Testing Center Booking</h1>
-        <p>To book a Testing Center appointment, please
+        <p>To book a Testing Center appointment, please follow these steps:</p>
+
+        <div class="step">
+            <p><strong>Step 1:</strong> Log in to the myVCCCD portal in this browser.</p>
+            <p>
+                <a href="https://account.vcccd.edu/_layouts/PG/login.aspx?ReturnUrl=%2Fsso%2Fgo.ashx%3FSAMLRequest%3DjZLLbsIwFET3fEWUPXkCAQuQKPSBRAEB7aIbZJwLWErs1Nem5e8bh7bAoqhejueMZix3keZZQQZG78UC3g2grjnOZ54JJNVVzzVKEEmRIxE0BySakeXgeUIiLyCFkloymblX0G2GIoLSXAoLjUc9dza9n8wex9P1JknCoN1pd7bNoJlAEtG0tY3TtN1qBGG8iZIgZgkNqAVfQWGZ0XPLyCoI0cBYoKZCl2IQtephUI9aqygmcYc0kjfrGpX7uKC6IvdaF0h8nzImjdDegTGWepAaH1H6O%252BlR3H9aav698o6LlIvd7XmbkwnJ02o1r89ny5WNGPyMHkqBJge1BHXgDF4Wk3OR%252FHjRgRbcZ1KBb190bRu5%252FTLIcbpWINVe1f8n2vUvoXNMQablgPFoLjPOjpVuz4NUOdV%252F7wy9sFJ4Wt9WVmIEFsD4lkPq%252FsYMskx%252BDBVQDT1XKwOu4%252FdrtVOZ60%252FX%252FwI%253D%26RelayState%3Dhttps%253A%252F%252Fmy.vcccd.edu%252Fapi%252Fcore%252Fsaml_sso"
+                   target="_blank"
+                   class="button">
+                    Go to myVCCCD Login
+                </a>
+            </p>
+        </div>
+
+        <div class="step">
+            <p><strong>Step 2:</strong> After logging in, return to this page and open the booking app.</p>
+
+            <p>
+                <a href="https://apps.powerapps.com/play/e/2c16c55f-029e-eab6-a895-cf758abc090e/a/d88cfdfe-c1d7-464c-ad73-3e18c784ad47?tenantId=bb8b8a6b-2799-4f34-bf92-85f819bc006f&hint=e3fc8212-2b4a-4c61-959f-b36758bcdf8a&sourcetime=1790695023757"
+                   class="button">
+                    Open Testing Center Booking App
+                </a>
+            </p>
+
+            <p>
+                <a href="https://apps.powerapps.com/play/e/default-bb8b8a6b-2799-4f34-bf92-85f819bc006f/a/80437b92-ed95-442d-b145-c710ff3cb54e?tenantId=bb8b8a6b-2799-4f34-bf92-85f819bc006f"
+                   class="button">
+                    Open Second App
+                </a>
+            </p>
+        </div>
+
+        <div class="divider"></div>
+
+        <h2>Finished Booking?</h2>
+        <p>If you have already completed your appointment booking, you may log out of myVCCCD below.</p>
+
+        <p>
+            <a href="javascript:void(0);" class="button logout" onclick="logoutAndRedirect()">
+                Log Out and Return
+            </a>
+        </p>
+
+        <p class="note">
+            If you are returned here from the booking app, you are still signed in.  
+            Use the logout button above if you want to end your session.
+        </p>
+    </div>
+</body>
+</html>
