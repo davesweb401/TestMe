@@ -39,51 +39,38 @@
             background-color: #7a0000;
         }
     </style>
-
     <script>
-        // ⭐ Detect if user returned after login
-        window.onload = function() {
-            const params = new URLSearchParams(window.location.search);
-            if (params.get("afterLogin") === "1") {
-                // Launch Canvas app ONLY after login is complete
-                window.location.href =
-                    "https://apps.powerapps.com/play/e/2c16c55f-029e-eab6-a895-cf758abc090e/a/d88cfdfe-c1d7-464c-ad73-3e18c784ad47";
-            }
-        };
-
-        // ⭐ Login in same tab, then return to this page with flag
-        function loginThenLaunch() {
-            const returnUrl = encodeURIComponent(window.location.origin + window.location.pathname + "?afterLogin=1");
-
-            // myVCCCD login with return URL pointing back to THIS page
-            window.location.href =
-                "https://account.vcccd.edu/_layouts/PG/login.aspx?ReturnUrl=" + returnUrl;
-        }
-
-        // ⭐ Logout + guaranteed redirect
         function logoutAndRedirect() {
             window.open("https://login.microsoftonline.com/common/oauth2/logout", "_blank");
-
             setTimeout(function() {
                 window.location.href = "https://davesweb401.github.io/TestMe/redirect.html";
             }, 1200);
         }
+        function openBookingAppSameTab() {
+            window.location.href =
+                "https://apps.powerapps.com/play/e/2c16c55f-029e-eab6-a895-cf758abc090e/a/d88cfdfe-c1d7-464c-ad73-3e18c784ad47";
+        }
     </script>
 </head>
-
 <body>
     <div class="container">
         <h1>Testing Center Booking</h1>
 
-        <p><strong>Step 1:</strong> Log in to myVCCCD.</p>
-        <a href="javascript:void(0);" class="button" onclick="loginThenLaunch()">
-            Log In and Open Booking App
+        <p><strong>Step 1:</strong> Log in to myVCCCD in this browser.</p>
+        <a class="button"
+           href="https://account.vcccd.edu/_layouts/PG/login.aspx?ReturnUrl=%2Fsso%2Fgo.ashx%3FSAMLRequest%3DjZLLbsIwFET3fEWUPXkCAQuQKPSBRAEB7aIbZJwLWErs1Nem5e8bh7bAoqhejueMZix3keZZQQZG78UC3g2grjnOZ54JJNVVzzVKEEmRIxE0BySakeXgeUIiLyCFkloymblX0G2GIoLSXAoLjUc9dza9n8wex9P1JknCoN1pd7bNoJlAEtG0tY3TtN1qBGG8iZIgZgkNqAVfQWGZ0XPLyCoI0cBYoKZCl2IQtephUI9aqygmcYc0kjfrGpX7uKC6IvdaF0h8nzImjdDegTGWepAaH1H6O%252BlR3H9aav698o6LlIvd7XmbkwnJ02o1r89ny5WNGPyMHkqBJge1BHXgDF4Wk3OR%252FHjRgRbcZ1KBb190bRu5%252FTLIcbpWINVe1f8n2vUvoXNMQablgPFoLjPOjpVuz4NUOdV%252F7wy9sFJ4Wt9WVmIEFsD4lkPq%252FsYMskx%252BDBVQDT1XKwOu4%252FdrtVOZ60%252FX%252FwI%253D%26RelayState%3Dhttps%253A%252F%252Fmy.vcccd.edu%252Fapi%252Fcore%252Fsaml_sso">
+            Go to myVCCCD Login
+        </a>
+
+        <p style="margin-top:1.5rem;"><strong>Step 2:</strong> After you’re logged in, return here and open the booking app.</p>
+        <a class="button" href="javascript:void(0);" onclick="openBookingAppSameTab()">
+            Open Testing Center Booking App
         </a>
 
         <hr style="margin: 2rem 0;">
 
         <h2>Finished Booking?</h2>
-        <a href="javascript:void(0);" class="button logout" onclick="logoutAndRedirect()">
+        <a class="button logout" href="javascript:void(0);" onclick="logoutAndRedirect()">
             Log Out and Return
         </a>
     </div>
