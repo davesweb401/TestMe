@@ -77,7 +77,7 @@
 
         // ⭐ Logout + redirect (works even if already logged out)
         function logoutAndRedirect() {
-            window.open("https://my.vcccd.edu/cas/logout", "_blank");
+            window.open("https://login.microsoftonline.com/common/oauth2/logout", "_blank");
 
             setTimeout(function() {
                 window.location.href = "https://davesweb401.github.io/TestMe/redirect.html";
