@@ -101,10 +101,17 @@
         <h2>Finished Booking?</h2>
         <p>If you have already completed your appointment booking, you may log out of myVCCCD below.</p>
 
+        
         <p>
-            <a href="https://my.vcccd.edu/cas/logout" class="button logout">
-                Log Out of myVCCCD
+            <a href="https://my.vcccd.edu/cas/logout" class="button logout" target="_blank">
+                Log Out
             </a>
+            
+            <script>
+                setTimeout(function() {
+                    window.location.href = "https://davesweb401.github.io/TestMe/redirect.html";
+                }, 800);
+            </script>
         </p>
 
         <p class="note">
