@@ -19,18 +19,6 @@
             border-radius: 8px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.08);
         }
-        h1 {
-            font-size: 1.6rem;
-            margin-bottom: 0.5rem;
-        }
-        p {
-            line-height: 1.5;
-            margin: 0.5rem 0;
-        }
-        .step {
-            margin-top: 1rem;
-            padding-left: 1rem;
-        }
         a.button {
             display: inline-block;
             margin-top: 1.5rem;
@@ -50,35 +38,35 @@
         .logout:hover {
             background-color: #7a0000;
         }
-        .note {
-            margin-top: 1rem;
-            font-size: 0.9rem;
-            color: #555;
-        }
-        .divider {
-            margin: 2rem 0;
-            height: 1px;
-            background-color: #ccc;
-        }
     </style>
 
     <script>
-        // ⭐ Login + auto-launch Canvas app in SAME TAB
-        function loginThenLaunch() {
-            // Step 1: Navigate to myVCCCD login in SAME TAB
-            window.location.href = "https://account.vcccd.edu/_layouts/PG/login.aspx?ReturnUrl=%2Fsso%2Fgo.ashx%3FSAMLRequest%3DjZLLbsIwFET3fEWUPXkCAQuQKPSBRAEB7aIbZJwLWErs1Nem5e8bh7bAoqhejueMZix3keZZQQZG78UC3g2grjnOZ54JJNVVzzVKEEmRIxE0BySakeXgeUIiLyCFkloymblX0G2GIoLSXAoLjUc9dza9n8wex9P1JknCoN1pd7bNoJlAEtG0tY3TtN1qBGG8iZIgZgkNqAVfQWGZ0XPLyCoI0cBYoKZCl2IQtephUI9aqygmcYc0kjfrGpX7uKC6IvdaF0h8nzImjdDegTGWepAaH1H6O%252BlR3H9aav698o6LlIvd7XmbkwnJ02o1r89ny5WNGPyMHkqBJge1BHXgDF4Wk3OR%252FHjRgRbcZ1KBb190bRu5%252FTLIcbpWINVe1f8n2vUvoXNMQablgPFoLjPOjpVuz4NUOdV%252F7wy9sFJ4Wt9WVmIEFsD4lkPq%252FsYMskx%252BDBVQDT1XKwOu4%252FdrtVOZ60%252FX%252FwI%253D%26RelayState%3Dhttps%253A%252F%252Fmy.vcccd.edu%252Fapi%252Fcore%252Fsaml_sso";
+        // ⭐ Detect if user returned after login
+        window.onload = function() {
+            const params = new URLSearchParams(window.location.search);
+            if (params.get("afterLogin") === "1") {
+                // Launch Canvas app ONLY after login is complete
+                window.location.href =
+                    "https://apps.powerapps.com/play/e/2c16c55f-029e-eab6-a895-cf758abc090e/a/d88cfdfe-c1d7-464c-ad73-3e18c784ad47";
+            }
+        };
 
-            // Step 2: After login completes, auto-launch the Canvas app
-            // This fires when the user returns to this page after login
-            setTimeout(function() {
-                window.location.href = "https://apps.powerapps.com/play/e/2c16c55f-029e-eab6-a895-cf758abc090e/a/d88cfdfe-c1d7-464c-ad73-3e18c784ad47";
-            }, 1500);
+        // ⭐ Login in same tab, then return to this page with flag
+        function loginThenLaunch() {
+            const returnUrl = encodeURIComponent(window.location.origin + window.location.pathname + "?afterLogin=1");
+
+            // myVCCCD login with return URL pointing back to THIS page
+            window.location.href =
+                "https://account.vcccd.edu/_layouts/PG/login.aspx?ReturnUrl=" + returnUrl;
         }
 
-        // ⭐ Logout + guaranteed redirect (works even if already logged out)
+        // ⭐ Logout + guaranteed redirect
         function logoutAndRedirect() {
-            // Log out of Microsoft 365
             window.open("https://login.microsoftonline.com/common/oauth2/logout", "_blank");
+
+            setTimeout(function() {
+                window.location.href = "https://davesweb401.github.io/TestMe/redirect.html";
+            }, 1200);
         }
     </script>
 </head>
@@ -86,32 +74,18 @@
 <body>
     <div class="container">
         <h1>Testing Center Booking</h1>
-        <p>To book a Testing Center appointment, please follow these steps:</p>
 
-        <div class="step">
-            <p><strong>Step 1:</strong> Log in to the myVCCCD portal.</p>
-            <p>
-                <a href="javascript:void(0);" class="button" onclick="loginThenLaunch()">
-                    Log In and Open Booking App
-                </a>
-            </p>
-        </div>
+        <p><strong>Step 1:</strong> Log in to myVCCCD.</p>
+        <a href="javascript:void(0);" class="button" onclick="loginThenLaunch()">
+            Log In and Open Booking App
+        </a>
 
-        <div class="divider"></div>
+        <hr style="margin: 2rem 0;">
 
         <h2>Finished Booking?</h2>
-        <p>You may log out of myVCCCD below.</p>
-
-        <p>
-            <a href="javascript:void(0);" class="button logout" onclick="logoutAndRedirect()">
-                Log Out and Return
-            </a>
-        </p>
-
-        <p class="note">
-            If you are returned here from the booking app, you are still signed in.  
-            Use the logout button above if you want to end your session.
-        </p>
+        <a href="javascript:void(0);" class="button logout" onclick="logoutAndRedirect()">
+            Log Out and Return
+        </a>
     </div>
 </body>
 </html>
